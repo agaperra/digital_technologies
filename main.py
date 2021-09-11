@@ -8,8 +8,6 @@ from sklearn.neural_network import MLPClassifier
 
 # Лабораторная работа №1 по курсу Цифровые технологии обработки информации
 
-# print("Hello, darling")
-
 # responses[i,j]=math.exp(l1*t)*math.sin(l2*t) колебательный
 # responses[i,j]=math.exp(l1*t)-math.exp(l2*t) апериодический
 # l1 = -(w0)/(Q*2) колебательный
@@ -20,10 +18,9 @@ from sklearn.neural_network import MLPClassifier
 # D= math.sqrt(w0*w0*(1/(Q*Q) -4))
 
 responses = numpy.zeros((50, 100))
-# print(responses)
 response_type = numpy.zeros(50, int)
-# print(response_type)
 
+# учебный сет
 w0 = 0.1
 dt = 0.1 / w0
 for i in range(0, 50):
@@ -57,16 +54,15 @@ print(response_type)
 # pyplot.show()
 
 param_grid = {'max_iter': [1000], 'activation': ['tanh'], 'alpha': [0.65],
-              'hidden_layer_sizes': [1], 'solver': ['lbfgs']}
+              'hidden_layer_sizes': [5, 5], 'solver': ['lbfgs']}
 grid_search = GridSearchCV(MLPClassifier(), param_grid, cv=2)
 grid_search.fit(responses, response_type)
 
 responses_test = numpy.zeros((100, 100))
-# print(responses)
 response_type_test = numpy.zeros(100, int)
-# print(response_type)
 
-w0 = 0.1
+# тестовый сет
+w0 = 0.9
 dt = 0.1 / w0
 for i in range(0, 100):
     Q = random.random()
