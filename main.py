@@ -21,10 +21,10 @@ responses = numpy.zeros((50, 100))
 response_type = numpy.zeros(50, int)
 
 # учебный сет
-w0 = 0.1
-dt = 0.1 / w0
+w0 = 0.1  # резонансная частота
+dt = 0.1 / w0  # малый интервал времени
 for i in range(0, 50):
-    Q = random.random()
+    Q = random.random()  # добротность
     if Q < 0.5:
         # апериодический
         D = math.sqrt(w0 * w0 * (1 / (Q * Q) - 4))
@@ -49,22 +49,25 @@ for i in range(0, 50):
                 responses[i, j] = math.exp(l1 * t) * math.sin(l2 * t)
                 response_type[i] = 1
 
-print(response_type)
 # pyplot.plot(responses[10, :], 'o')
 # pyplot.show()
 
-param_grid = {'max_iter': [1000], 'activation': ['tanh'], 'alpha': [0.65],
-              'hidden_layer_sizes': [5, 5], 'solver': ['lbfgs']}
+param_grid = {'max_iter': [1000],
+              'activation': ['tanh'],  # функция перехода
+              'alpha': [0.65],
+              'hidden_layer_sizes': [1],
+              'solver': ['lbfgs']}
+
 grid_search = GridSearchCV(MLPClassifier(), param_grid, cv=2)
 grid_search.fit(responses, response_type)
 
-responses_test = numpy.zeros((100, 100))
-response_type_test = numpy.zeros(100, int)
+responses_test = numpy.zeros((1000, 100))
+response_type_test = numpy.zeros(1000, int)
 
 # тестовый сет
-w0 = 0.9
+w0 = 0.1
 dt = 0.1 / w0
-for i in range(0, 100):
+for i in range(0, 1000):
     Q = random.random()
     if Q < 0.5:
         # апериодический
@@ -91,8 +94,6 @@ for i in range(0, 100):
                 response_type_test[i] = 1
 
 store = grid_search.predict(responses_test)
-print(store)
-print(response_type_test)
 percent = store - response_type_test
 print(percent)
 count = 0
@@ -100,5 +101,3 @@ for i in range(0, len(percent)):
     if percent[i] == 0:
         count = count + 1
 print("Точность:" + str(int(100 * count / len(percent))) + "%")
-
-
