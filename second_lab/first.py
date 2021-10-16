@@ -7,16 +7,24 @@ image = Image.open(filename)
 w, h = image.size
 im_load = image.load()
 draw = ImageDraw.Draw(image)
-y = random.uniform(0.5, 1.5)
+
+y1 = random.uniform(0.5, 1.5)
+y2 = random.uniform(0.5, 1.5)
+y3 = random.uniform(0.5, 1.5)
 for i in range(w):
     for j in range(h):
+
         r = im_load[i, j][0]
-        R = r ** y
+        R = r ** y1
+
         g = im_load[i, j][1]
-        G = g ** y
+        G = g ** y2
+
         b = im_load[i, j][2]
-        B = b ** y
+        B = b ** y3
+
         image.putpixel((i, j), (int(R), int(G), int(B)))
+
 im = image.tobytes()
 im_out = Image.frombytes(image.mode, (w, h), im)
 im_out.save(r"C:\Users\Agaperra\PycharmProjects\digital_technologies\other.png", 'png')
