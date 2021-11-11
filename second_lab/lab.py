@@ -85,4 +85,4 @@ for y in range(0, h * 3):
 
 result = bytes(data_bytes)
 image_out = Image.frombytes('RGB', (w, h), result)
-image_out.save(r"C:\Users\Agaperra\PycharmProjects\digital_technologies\imageSecond.jpg", 'png')
+image_out.save(r"C:\Users\Agaperra\PycharmProjects\digital_technologies\imageSecond.png", 'png')
